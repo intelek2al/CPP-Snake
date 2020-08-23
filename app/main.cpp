@@ -7,258 +7,290 @@
 
 #include "Graphics.hpp"
 
-#define BLOCK_SIZE 40
+#include "src/Includes.h"
 
-#define SPEED 1
-#define FOOD_SIZE BLOCK_SIZE
+#include "src/Food.h"
+#include "src/Snake.h"
+#include "src/SnakeBlocks.h"
 
-#define GET_STRING(x) #x
-#define GET_VALUE(x) GET_STRING(x)
-#define GET_ENUM(x) GET_VALUE(x)
 
-int W = 20;
-int H = 20;
 
-int SCREEN_W = BLOCK_SIZE * W;
-int SCREEN_H = BLOCK_SIZE * H;
+// class Food
+// {
+// public:
+//     const auto &getPosition() const
+//     {
+//         return position;
+//     }
 
-template <typename T>
-sf::Vector2<T> GET_GLOBAL_POSITION(T x, T y)
-{
-    return {BLOCK_SIZE * x, BLOCK_SIZE * y};
-}
+//     const auto &getGlobalPosition() const
+//     {
+//         return global_position;
+//     }
 
-template <typename T>
-sf::Vector2<T> GET_GLOBAL_POSITION(sf::Vector2<T> pos)
-{
-    return GET_GLOBAL_POSITION(pos.x, pos.y);
-}
+// private:
+//     sf::Vector2<int> generatePosition(Snake &snake, Food &food)
+//     {
+//         sf::Vector2<int> pos = {std::rand() % (W - 1) + 1, std::rand() % (H - 1) + 1};
+//         while (snake.getHeadPosition() == pos || food.getPosition() == pos)
+//         {
+//             pos = {std::rand() % (W - 1) + 1, std::rand() % (H - 1) + 1};
+//         }
+//         return pos;
+//     }
 
-template <typename T>
-bool OPERATOR_EQUEL_VECTOR(const sf::Vector2<T> &lhs, const sf::Vector2<T> &rhs)
-{
-    return lhs.x == rhs.x && lhs.y == rhs.y;
-}
+// public:
+//     Food(bool _is_good = true) : is_good(_is_good)
+//     {
+//         shape = sf::RectangleShape({FOOD_SIZE, FOOD_SIZE});
+//         position = {std::rand() % (W - 1) + 1, std::rand() % (H - 1) + 1};
+//         global_position = GET_GLOBAL_POSITION(position);
+//         color = is_good ? sf::Color::Green : sf::Color::Red;
+//         shape.setPosition(global_position.x, global_position.y);
+//         shape.setFillColor(color);
+//         shape.setOutlineThickness(5.f);
+//         shape.setOutlineColor(sf::Color::Magenta);
+//     }
 
-enum class Direction
-{
-    Up = -1,
-    Right = 2,
-    Down = 1,
-    Left = -2
-};
+//     auto getHealthment() const
+//     {
+//         return is_good;
+//     }
 
-struct VectorObject
-{
-    sf::Vector2<int> UL;
-    sf::Vector2<int> DR;
-};
+//     void drawFood(sf::RenderWindow &w) const
+//     {
+//         w.draw(shape);
+//     }
 
-class Food
-{
-public:
-    Food(bool _is_good = true) : is_good(_is_good)
-    {
-        shape = sf::RectangleShape({FOOD_SIZE, FOOD_SIZE});
-        position = {std::rand() % (W - 1) + 1, std::rand() % (H - 1) + 1};
-        global_position = GET_GLOBAL_POSITION(position);
-        color = is_good ? sf::Color::Green : sf::Color::Red;
-        shape.setPosition(global_position.x, global_position.y);
-        shape.setFillColor(color);
-        shape.setOutlineThickness(5.f);
-        shape.setOutlineColor(sf::Color::Magenta);
-    }
+//     void feedSnake(Snake &snake, Food &food)
+//     {
+//         position = generatePosition(snake, food);
+//         global_position = GET_GLOBAL_POSITION(position);
+//         color = is_good ? sf::Color::Green : sf::Color::Red;
+//         shape.setPosition(global_position.x, global_position.y);
+//     }
 
-    const auto &getPosition() const
-    {
-        return position;
-    }
+// private:
+//     sf::RectangleShape shape;
+//     sf::Color color;
+//     sf::Vector2<int> position;
+//     sf::Vector2<int> global_position;
+//     const bool is_good;
+// };
 
-    const auto &getGlobalPosition() const
-    {
-        return global_position;
-    }
+// class SnakeBlock
+// {
+// public:
+//     SnakeBlock(const sf::Vector2i &pos)
+//     {
+//         shape.setSize({BLOCK_SIZE, BLOCK_SIZE});
+//         position = {pos.x, pos.y};
+//         global_position = GET_GLOBAL_POSITION(position);
+//         shape.setPosition(global_position.x, global_position.y);
+//         shape.setOutlineThickness(5.f);
+//         shape.setOutlineColor(COLOR_BORDER);
+//         shape.setFillColor(COLOR_BODY);
+//     }
+//     SnakeBlock(const sf::Vector2i &pos, sf::Color clr)
+//     {
+//         shape.setSize({BLOCK_SIZE, BLOCK_SIZE});
+//         position = {pos.x, pos.y};
+//         global_position = GET_GLOBAL_POSITION(position);
+//         shape.setPosition(global_position.x, global_position.y);
+//         shape.setOutlineThickness(5.f);
+//         shape.setOutlineColor(COLOR_BORDER);
+//         shape.setFillColor(clr);
+//     }
 
-    void drawFood(sf::RenderWindow &w) const
-    {
-        w.draw(shape);
-    }
+//     auto &getShape() const
+//     {
+//         return shape;
+//     }
 
-private:
-    sf::RectangleShape shape;
-    sf::Color color;
-    sf::Vector2<int> position;
-    sf::Vector2<int> global_position;
-    const bool is_good;
-};
+//     const auto &getPosition() const
+//     {
+//         return position;
+//     }
 
-class SnakeBlock
-{
-public:
-    SnakeBlock()
-    {
-        shape.setSize({BLOCK_SIZE, BLOCK_SIZE});
-        position = {0, 0};
-        global_position = GET_GLOBAL_POSITION(position);
-        shape.setPosition(global_position.x, global_position.y);
-        shape.setFillColor(sf::Color::Cyan);
-    }
-    SnakeBlock(const sf::Vector2i &pos)
-    {
-        shape.setSize({BLOCK_SIZE, BLOCK_SIZE});
-        position = {pos.x, pos.y};
-        global_position = GET_GLOBAL_POSITION(position);
-        shape.setPosition(global_position.x, global_position.y);
-        shape.setFillColor(sf::Color::Cyan);
-    }
+//     const auto &getGlobalPosition() const
+//     {
+//         return global_position;
+//     }
 
-    auto &getShape() const
-    {
-        return shape;
-    }
+//     void setColor(sf::Color clr)
+//     {
+//         shape.setFillColor(clr);
+//     }
 
-    const auto &getPosition() const
-    {
-        return position;
-    }
+// private:
+//     sf::RectangleShape shape;
+//     sf::Vector2<int> position;
+//     sf::Vector2<int> global_position;
+// };
 
-    const auto &getGlobalPosition() const
-    {
-        return global_position;
-    }
+// class Snake
+// {
+// private:
+//     bool checkHeadPosition(sf::Vector2<int> &new_head_position)
+//     {
+//         for (const auto &block : snake)
+//         {
+//             if (new_head_position == block.getPosition())
+//                 return false;
+//         }
+//         if (new_head_position.x == W || new_head_position.y == H || new_head_position.x == -1 || new_head_position.y == -1)
+//             return false;
+//         return true;
+//     }
+//     void doMovement(const sf::Vector2<int> &v)
+//     {
+//         if (is_done_process)
+//             move_vector.pop_front();
+//         move_vector.push_back(v);
+//         is_done_process = false;
+//     }
 
-private:
-    sf::RectangleShape shape;
-    sf::Vector2<int> position;
-    sf::Vector2<int> global_position;
-};
+//     auto getHead()
+//     {
+//         auto front = snake.begin();
+//         return front;
+//     }
 
-class Snake
-{
-private:
-    bool checkHeadPosition(sf::Vector2<int> new_head_position)
-    {
-        for (const auto &block : snake)
-        {
-            if (new_head_position == block.getPosition())
-                return false;
-        }
-        return true;
-    }
-    void doMovement(const sf::Vector2<int> &v)
-    {
-        if (is_done_process)
-            move_vector.pop_front();
-        move_vector.push_back(v);
-        is_done_process = false;
-    }
+//     void updateTimeFrame(size_t step)
+//     {
+//         // if (FRAME_TIME > )
+//         FRAME_TIME += step;
+//     }
 
-    auto getHead() const
-    {
-        auto front = snake.begin();
-        return front;
-    }
-    sf::Vector2<int> getHeadPosition() const
-    {
-        auto front = getHead();
-        return front->getPosition();
-    }
+//     bool deleteBlock()
+//     {
+//     }
 
-public:
-    Snake()
-    {
-        snake.push_front(SnakeBlock({0, 0}));
-        snake.push_front(SnakeBlock({1, 0}));
-        snake.push_front(SnakeBlock({2, 0}));
-        snake.push_front(SnakeBlock({3, 0}));
-        auto front = snake.begin();
-        std::cout << front->getPosition().x << " " << front->getPosition().y << std::endl;
-    }
+//     void eatFood(Food &f, Food &of)
+//     {
+//         if (f.getHealthment())
+//         {
+//             addBlock();
+//             f.feedSnake(*this, of);
+//             updateTimeFrame(FRAME_TIME_STEP);
+//             std::cout << FRAME_TIME << std::endl;
+//         }
+//         else
+//         {
+//             deleteBlock();
+//             f.feedSnake(*this, of);
+//             updateTimeFrame(FRAME_TIME_STEP);
+//             std::cout << FRAME_TIME << std::endl;
+//         }
+//     }
 
-    bool moveSnake()
-    {
-        if (!is_add_block)
-        {
-            snake.pop_back();
-        }
-        is_add_block = false;
-        auto front = getHead();
-        std::cout << "!! " << front->getPosition().x << " " << front->getPosition().y << std::endl;
-        auto &vector = move_vector.front();
+// public:
+//     sf::Vector2<int> getHeadPosition()
+//     {
+//         auto front = getHead();
+//         return front->getPosition();
+//     }
+//     Snake()
+//     {
+//         snake.push_front(SnakeBlock({0, 0}));
+//         snake.push_front(SnakeBlock({1, 0}));
+//         snake.push_front(SnakeBlock({2, 0}));
+//         snake.push_front(SnakeBlock({3, 0}));
+//         // auto front = snake.begin();
+//         // std::cout << front->getPosition().x << " " << front->getPosition().y << std::endl;
+//     }
 
-        sf::Vector2<int> new_head_position = {front->getPosition().x + SPEED * vector.x, front->getPosition().y + SPEED * vector.y};
-        is_done_process = true;
-        if (move_vector.size() > 1)
-        {
-            std::cout << "removed" << std::endl;
-            move_vector.pop_front();
-            is_done_process = false;
-        }
-        if (!checkHeadPosition(new_head_position))
-            return false;
-        snake.push_front(SnakeBlock(new_head_position));
-        return true;
-    }
+//     bool moveSnake()
+//     {
+//         if (!is_add_block)
+//         {
+//             snake.pop_back();
+//         }
+//         is_add_block = false;
+//         auto front = getHead();
+//         // std::cout << "!! " << front->getPosition().x << " " << front->getPosition().y << std::endl;
+//         auto &vector = move_vector.front();
+//         front->setColor(COLOR_BODY);
+//         sf::Vector2<int>
+//             new_head_position = {front->getPosition().x + SPEED * vector.x, front->getPosition().y + SPEED * vector.y};
+//         is_done_process = true;
+//         if (move_vector.size() > 1)
+//         {
+//             // std::cout << "removed" << std::endl;
+//             move_vector.pop_front();
+//             is_done_process = false;
+//         }
+//         if (!checkHeadPosition(new_head_position))
+//             return false;
+//         snake.push_front(SnakeBlock(new_head_position, COLOR_HEAD));
+//         return true;
+//     }
 
-    void drawSnake(sf::RenderWindow &w) const
-    {
-        for (const auto &block : snake)
-            w.draw(block.getShape());
-    }
+//     void destroyTail()
+//     {
+//         snake.pop_back();
+//     }
 
-    void addBlock()
-    {
-        is_add_block = true;
-    }
+//     void drawSnake(sf::RenderWindow &w) const
+//     {
+//         for (const auto &block : snake)
+//             w.draw(block.getShape());
+//     }
 
-    void setDirection(Direction dir)
-    {
-        if (std::abs(static_cast<int>(direction)) != std::abs(static_cast<int>(dir)))
-            direction = dir;
-        std::cout << "added << " << GET_ENUM(direction) << std::endl;
-        switch (direction)
-        {
-        case Direction::Up:
-        {
-            doMovement({0, -1});
-            break;
-        }
-        case Direction::Right:
-        {
-            doMovement({1, 0});
-            break;
-        }
-        case Direction::Left:
-        {
-            doMovement({-1, 0});
-            break;
-        }
-        case Direction::Down:
-        {
-            doMovement({0, 1});
-            break;
-        }
-        }
-    }
+//     void addBlock()
+//     {
+//         is_add_block = true;
+//     }
 
-    void checkFoodCollision(const Food &f)
-    {
-        if (f.getPosition() == getHeadPosition())
-            std::cout << "Yummy" << std::endl;
-    }
+//     void setDirection(Direction dir)
+//     {
+//         if (std::abs(static_cast<int>(direction)) != std::abs(static_cast<int>(dir)))
+//             direction = dir;
+//         // std::cout << "added << " << GET_ENUM(direction) << std::endl;
+//         switch (direction)
+//         {
+//         case Direction::Up:
+//         {
+//             doMovement({0, -1});
+//             break;
+//         }
+//         case Direction::Right:
+//         {
+//             doMovement({1, 0});
+//             break;
+//         }
+//         case Direction::Left:
+//         {
+//             doMovement({-1, 0});
+//             break;
+//         }
+//         case Direction::Down:
+//         {
+//             doMovement({0, 1});
+//             break;
+//         }
+//         }
+//     }
 
-    auto getDirection()
-    {
-        return direction;
-    }
+//     void checkFoodCollision(Food &f, Food &of)
+//     {
+//         if (f.getPosition() != getHeadPosition())
+//             return;
+//         eatFood(f, of);
+//     }
 
-private:
-    bool is_add_block = false;
-    std::deque<SnakeBlock> snake;
-    Direction direction = Direction::Right;
-    std::deque<sf::Vector2<int>> move_vector{{1, 0}};
-    bool is_done_process = true;
-};
+//     auto getDirection()
+//     {
+//         return direction;
+//     }
+
+// private:
+//     bool is_add_block = false;
+//     std::deque<SnakeBlock> snake;
+//     Direction direction = Direction::Right;
+//     std::deque<sf::Vector2<int>> move_vector{{1, 0}};
+//     bool is_done_process = true;
+// };
 
 int main(int argc, char *argv[])
 {
@@ -269,25 +301,15 @@ int main(int argc, char *argv[])
     // window.clear();
     auto start_time = std::chrono::steady_clock::now();
     Snake snake;
-    Food food;
+    Food h_food;
+    Food b_food(false);
     bool skip = false;
-    size_t TM = 100;
     while (window.isOpen())
     {
         window.clear();
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.key.code == sf::Keyboard::Tab)
-            {
-                TM -= 10;
-                break;
-            }
-            if (event.key.code == sf::Keyboard::Space)
-            {
-                snake.addBlock();
-                break;
-            }
             if (event.key.code == sf::Keyboard::Down && snake.getDirection() != Direction::Down)
             {
                 snake.setDirection(Direction::Down);
@@ -312,7 +334,7 @@ int main(int argc, char *argv[])
                 window.close();
         }
 
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time) >= std::chrono::milliseconds(TM))
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time) >= std::chrono::milliseconds(1000))
         {
             skip = false;
             start_time = std::chrono::steady_clock::now();
@@ -321,9 +343,11 @@ int main(int argc, char *argv[])
                 std::cout << "Game Over" << std::endl;
                 window.close();
             }
-            snake.checkFoodCollision(food);
+            snake.checkFoodCollision(h_food, b_food);
+            snake.checkFoodCollision(b_food, h_food);
             snake.drawSnake(window);
-            food.drawFood(window);
+            h_food.drawFood(window);
+            b_food.drawFood(window);
             window.display();
         }
     }
