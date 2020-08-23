@@ -22,14 +22,6 @@
 #define GET_VALUE(x) GET_STRING(x)
 #define GET_ENUM(x) GET_VALUE(x)
 
-int W = 20;
-int H = 20;
-
-int SCREEN_W = BLOCK_SIZE * W;
-int SCREEN_H = BLOCK_SIZE * H;
-
-size_t FRAME_TIME = 80;
-
 #define FRAME_TIME_STEP 10
 
 template <typename T>
@@ -56,6 +48,17 @@ enum class Direction
     Right = 2,
     Down = 1,
     Left = -2
+};
+
+struct WindowInfo
+{
+    int W = 20;
+    int H = 20;
+
+    int SCREEN_W = BLOCK_SIZE * W;
+    int SCREEN_H = BLOCK_SIZE * H;
+
+    size_t FRAME_TIME = 80;
 };
 
 struct VectorObject

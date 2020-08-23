@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2019 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -28,48 +28,49 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <cmath>
 
+
 namespace sf
 {
-    ////////////////////////////////////////////////////////////
-    RectangleShape::RectangleShape(const Vector2f &size)
-    {
-        setSize(size);
-    }
+////////////////////////////////////////////////////////////
+RectangleShape::RectangleShape(const Vector2f& size)
+{
+    setSize(size);
+}
 
-    ////////////////////////////////////////////////////////////
-    void RectangleShape::setSize(const Vector2f &size)
-    {
-        m_size = size;
-        update();
-    }
 
-    ////////////////////////////////////////////////////////////
-    const Vector2f &RectangleShape::getSize() const
-    {
-        return m_size;
-    }
+////////////////////////////////////////////////////////////
+void RectangleShape::setSize(const Vector2f& size)
+{
+    m_size = size;
+    update();
+}
 
-    ////////////////////////////////////////////////////////////
-    std::size_t RectangleShape::getPointCount() const
-    {
-        return 4;
-    }
 
-    ////////////////////////////////////////////////////////////
-    Vector2f RectangleShape::getPoint(std::size_t index) const
+////////////////////////////////////////////////////////////
+const Vector2f& RectangleShape::getSize() const
+{
+    return m_size;
+}
+
+
+////////////////////////////////////////////////////////////
+std::size_t RectangleShape::getPointCount() const
+{
+    return 4;
+}
+
+
+////////////////////////////////////////////////////////////
+Vector2f RectangleShape::getPoint(std::size_t index) const
+{
+    switch (index)
     {
-        switch (index)
-        {
         default:
-        case 0:
-            return Vector2f(0, 0);
-        case 1:
-            return Vector2f(m_size.x, 0);
-        case 2:
-            return Vector2f(m_size.x, m_size.y);
-        case 3:
-            return Vector2f(0, m_size.y);
-        }
+        case 0: return Vector2f(0, 0);
+        case 1: return Vector2f(m_size.x, 0);
+        case 2: return Vector2f(m_size.x, m_size.y);
+        case 3: return Vector2f(0, m_size.y);
     }
+}
 
 } // namespace sf

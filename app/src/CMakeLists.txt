@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
 
 project(src LANGUAGES CXX)
-add_library(src CMakeLists.txt Food.cpp Food.h Includes.h Snake.cpp Snake.h SnakeBlocks.cpp SnakeBlocks.h)
+add_library(src Food.cpp Snake.cpp SnakeBlocks.cpp)
+target_link_libraries (src sfml-graphics sfml-window sfml-system)

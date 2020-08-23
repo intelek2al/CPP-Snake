@@ -1,19 +1,8 @@
-#include <iostream>
-#include <utility>
-#include <stdlib.h>
-#include <deque>
-#include <chrono>
-#include <random>
-
-#include "Graphics.hpp"
-
 #include "src/Includes.h"
 
+#include "src/SnakeBlocks.h"
 #include "src/Food.h"
 #include "src/Snake.h"
-#include "src/SnakeBlocks.h"
-
-
 
 // class Food
 // {
@@ -294,15 +283,16 @@
 
 int main(int argc, char *argv[])
 {
+    WindowInfo w;
     std::srand(std::time(0));
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
-    sf::RenderWindow window(sf::VideoMode(SCREEN_W, SCREEN_H), "Snake", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(w.SCREEN_W, w.SCREEN_H), "Snake", sf::Style::Default, settings);
     // window.clear();
     auto start_time = std::chrono::steady_clock::now();
-    Snake snake;
-    Food h_food;
-    Food b_food(false);
+    Snake snake(&w);
+    Food h_food(&w);
+    Food b_food(&w, false);
     bool skip = false;
     while (window.isOpen())
     {
@@ -334,7 +324,7 @@ int main(int argc, char *argv[])
                 window.close();
         }
 
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time) >= std::chrono::milliseconds(1000))
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time) >= std::chrono::milliseconds(w.FRAME_TIME))
         {
             skip = false;
             start_time = std::chrono::steady_clock::now();
