@@ -18,7 +18,7 @@ private:
 
     void updateTimeFrame(size_t step);
 
-    bool deleteBlock();
+    void deleteBlock(size_t size);
 
     void eatFood(Food &f, Food &of);
 
@@ -34,11 +34,17 @@ public:
 
     void addBlock();
 
+    std::deque<SnakeBlock> getSnake();
     void setDirection(Direction dir);
 
     void checkFoodCollision(Food &f, Food &of);
 
     Direction getDirection();
+
+    size_t size()
+    {
+        return snake.size();
+    }
 
 private:
     WindowInfo *w;

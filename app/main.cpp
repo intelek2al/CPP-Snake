@@ -290,6 +290,8 @@ int main(int argc, char *argv[])
     sf::RenderWindow window(sf::VideoMode(w.SCREEN_W, w.SCREEN_H), "Snake", sf::Style::Default, settings);
     // window.clear();
     auto start_time = std::chrono::steady_clock::now();
+    auto start_SEC = std::chrono::steady_clock::now();
+    w.start = &start_SEC;
     Snake snake(&w);
     Food h_food(&w);
     Food b_food(&w, false);
@@ -326,12 +328,18 @@ int main(int argc, char *argv[])
 
         if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time) >= std::chrono::milliseconds(w.FRAME_TIME))
         {
+            if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_SEC) >= std::chrono::seconds(4))
+            {
+                start_SEC = std::chrono::steady_clock::now();
+                snake.destroyTail();
+            }
             skip = false;
             start_time = std::chrono::steady_clock::now();
-            if (!snake.moveSnake())
+            if (!snake.moveSnake() || snake.size() < 2)
             {
                 std::cout << "Game Over" << std::endl;
                 window.close();
+                break;
             }
             snake.checkFoodCollision(h_food, b_food);
             snake.checkFoodCollision(b_food, h_food);

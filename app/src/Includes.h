@@ -18,6 +18,8 @@
 #define COLOR_BORDER sf::Color(0, 135, 81)
 #define COLOR_HEAD sf::Color(0, 168, 84)
 
+#define RED_PILL 2
+
 #define GET_STRING(x) #x
 #define GET_VALUE(x) GET_STRING(x)
 #define GET_ENUM(x) GET_VALUE(x)
@@ -59,6 +61,8 @@ struct WindowInfo
     int SCREEN_H = BLOCK_SIZE * H;
 
     size_t FRAME_TIME = 80;
+
+    std::chrono::steady_clock::time_point *start;
 };
 
 struct VectorObject

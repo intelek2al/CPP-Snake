@@ -25,7 +25,7 @@ public:
     void feedSnake(Snake &snake, Food &food);
 
 private:
-    const WindowInfo *w;
+    WindowInfo *w;
     sf::RectangleShape shape;
     sf::Color color;
     sf::Vector2<int> position;

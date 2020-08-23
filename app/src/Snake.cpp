@@ -25,14 +25,22 @@ auto Snake::getHead()
     return front;
 }
 
+std::deque<SnakeBlock> Snake::getSnake()
+{
+    return snake;
+}
+
 void Snake::updateTimeFrame(size_t step)
 {
     // if (FRAME_TIME > )
     (w->FRAME_TIME) += step;
 }
 
-bool Snake::deleteBlock()
+void Snake::deleteBlock(size_t size)
 {
+    size = std::min(size, snake.size());
+    for (int i = 0; i < size; i++)
+        destroyTail();
 }
 
 void Snake::eatFood(Food &f, Food &of)
@@ -46,9 +54,8 @@ void Snake::eatFood(Food &f, Food &of)
     }
     else
     {
-        deleteBlock();
+        deleteBlock(RED_PILL);
         f.feedSnake(*this, of);
-        updateTimeFrame(FRAME_TIME_STEP);
         std::cout << w->FRAME_TIME << std::endl;
     }
 }
@@ -97,6 +104,7 @@ bool Snake::moveSnake()
 
 void Snake::destroyTail()
 {
+    updateTimeFrame(-FRAME_TIME_STEP);
     snake.pop_back();
 }
 
