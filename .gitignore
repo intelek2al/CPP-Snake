@@ -44,4 +44,4 @@
 
 # current project
 !CMakeLists.txt
-t??/build/*
+build/*
