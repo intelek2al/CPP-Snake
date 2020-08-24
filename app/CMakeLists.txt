@@ -40,7 +40,7 @@ add_executable(race00 ${SOURCE_EXE})
 target_link_libraries(race00 sfml-graphics sfml-window sfml-system sfml-audio src)
 include_directories(race00 ${SFML_INCLUDE_DIR})
 
-configure_file(./resources/electro.wav ${CMAKE_CURRENT_BINARY_DIR}/resources/electro.wav COPYONLY)
+configure_file(./resources/electro.ogg ${CMAKE_CURRENT_BINARY_DIR}/resources/electro.ogg COPYONLY)
 configure_file(./resources/menu.jpg ${CMAKE_CURRENT_BINARY_DIR}/resources/menu.jpg COPYONLY)
 configure_file(./resources/Back_button.png ${CMAKE_CURRENT_BINARY_DIR}/resources/Back_button.png COPYONLY)
 configure_file(./resources/button_game.png ${CMAKE_CURRENT_BINARY_DIR}/resources/button_game.png COPYONLY)

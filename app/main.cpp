@@ -6,25 +6,17 @@
 #include "src/Menu.h"
 #include "src/leaderboard.h"
 
-void initMusic()
+void initMusic(sf::Music &music)
 {
-    // sf::Music music;
-    // if (!music.openFromFile("electro.ogg"))
-    //     std::cout << -1; // error
-    // music.play();
-    // music.setLoop(true);
-
-    sf::SoundBuffer buffer;
-    buffer.loadFromFile("./resources/electro.wav"); // тут загружаем в буфер что то
-    sf::Sound sound;
-    sound.setBuffer(buffer);
-    sound.setVolume(100.f);
-    sound.play();
+    if (!music.openFromFile("./resources/electro.ogg"))
+        std::cout << -1; // error
+    music.play();
+    music.setLoop(true);
 }
 
 void initGame(WindowInfo *w)
 {
-    w->FRAME_TIME = START_FRAME_TIME - (std::max(w->W, w->H) * std::max(w->W, w->H)) / 130;
+    w->FRAME_TIME = START_FRAME_TIME - (std::max(w->W, w->H) * std::max(w->W, w->H)) / 200;
     std::srand(std::time(0));
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -165,8 +157,9 @@ bool initMenu(WindowInfo *w)
 
 int main(int argc, char *argv[])
 {
+    sf::Music music;
     WindowInfo *w = new WindowInfo;
-    initMusic();
+    initMusic(music);
     parce_func(argc, argv, w->W, w->H);
 
     w->SCREEN_W = w->W * BLOCK_SIZE;
@@ -177,4 +170,5 @@ int main(int argc, char *argv[])
     {
         initGame(w);
     }
+    return 0;
 }

@@ -2,7 +2,7 @@
 
 leaderboard::leaderboard(/* args */)
 {
-    std::ifstream fin("leaderboard.txt");
+    std::ifstream fin(".leaderboard.txt");
     std::string str;
     int score;
 
@@ -18,7 +18,7 @@ leaderboard::leaderboard(/* args */)
 
 void leaderboard::setnewrecord(int rec)
 {
-    std::ofstream out("leaderboard.txt", std::ios::app);
+    std::ofstream out(".leaderboard.txt", std::ios::app);
     if (out.is_open())
     {
         out << rec << std::endl;

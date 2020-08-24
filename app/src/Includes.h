@@ -22,7 +22,7 @@
 
 #define COLOR_BODY sf::Color(0, 186, 112)
 #define COLOR_BORDER sf::Color(0, 135, 81)
-#define COLOR_HEAD sf::Color(0, 168, 84)
+#define COLOR_HEAD sf::Color(255, 241, 17)
 
 #define START_FRAME_TIME 100
 

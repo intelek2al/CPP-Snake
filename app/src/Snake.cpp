@@ -68,10 +68,10 @@ sf::Vector2<int> Snake::getHeadPosition()
 
 Snake::Snake(WindowInfo *_w) : w(_w)
 {
-    snake.push_front(SnakeBlock({0, 0}));
-    snake.push_front(SnakeBlock({1, 0}));
-    snake.push_front(SnakeBlock({2, 0}));
-    snake.push_front(SnakeBlock({3, 0}));
+    snake.push_front(SnakeBlock({w->W / 2, w->H / 2}));
+    snake.push_front(SnakeBlock({w->W / 2 + 1, w->H / 2}));
+    snake.push_front(SnakeBlock({w->W / 2 + 2, w->H / 2}));
+    snake.push_front(SnakeBlock({w->W / 2 + 3, w->H / 2}));
     // auto front = snake.begin();
     // std::cout << front->getPosition().x << " " << front->getPosition().y << std::endl;
 }
