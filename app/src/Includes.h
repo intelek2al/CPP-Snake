@@ -6,8 +6,13 @@
 #include <deque>
 #include <chrono>
 #include <random>
+#include <set>
+#include <fstream>
+#include <string>
 
 #include "Graphics.hpp"
+
+#include "leaderboard.h"
 
 #define BLOCK_SIZE 40
 
@@ -17,6 +22,8 @@
 #define COLOR_BODY sf::Color(0, 186, 112)
 #define COLOR_BORDER sf::Color(0, 135, 81)
 #define COLOR_HEAD sf::Color(0, 168, 84)
+
+#define START_FRAME_TIME 100
 
 #define RED_PILL 2
 
@@ -60,7 +67,9 @@ struct WindowInfo
     int SCREEN_W = BLOCK_SIZE * W;
     int SCREEN_H = BLOCK_SIZE * H;
 
-    size_t FRAME_TIME = 80;
+    size_t FRAME_TIME = START_FRAME_TIME;
+
+    leaderboard retcodes;
 
     std::chrono::steady_clock::time_point *start;
 };

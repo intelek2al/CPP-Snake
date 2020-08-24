@@ -57,6 +57,5 @@ void Food::feedSnake(Snake &snake, Food &food)
     *(w->start) = std::chrono::steady_clock::now();
     position = generatePosition(snake, food);
     global_position = GET_GLOBAL_POSITION(position);
-    color = is_good ? sf::Color::Green : sf::Color::Red;
     shape.setPosition(global_position.x, global_position.y);
 }
