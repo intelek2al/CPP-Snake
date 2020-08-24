@@ -3,23 +3,23 @@
 Menu::Menu(WindowInfo *_w) : w(_w)
 {
 
-    Background_Text.loadFromFile("/Users/msavytskyi/Downloads/snake/app/menu.jpg", sf::IntRect(0, 0, w->SCREEN_W / 1.3, w->SCREEN_H)); // !!!!!! Путь у тебя другой
+    Background_Text.loadFromFile("./resources/menu.jpg", sf::IntRect(0, 0, w->SCREEN_W / 1.3, w->SCREEN_H)); // !!!!!! Путь у тебя другой
     Background.setTexture(Background_Text);
     Background.setPosition(w->SCREEN_W - w->SCREEN_W / 1.3, 0);
 
-    Back_texture.loadFromFile("/Users/msavytskyi/Downloads/snake/app/Back_button.png", sf::IntRect(0, 0, w->SCREEN_W / 1.3, w->SCREEN_H)); // !!!!!! Путь у тебя другой
+    Back_texture.loadFromFile("./resources/Back_button.png", sf::IntRect(0, 0, w->SCREEN_W / 1.3, w->SCREEN_H)); // !!!!!! Путь у тебя другой
     Back.setTexture(Back_texture);
     Back.setPosition(w->SCREEN_W - w->SCREEN_W / 1.6, w->SCREEN_H - w->SCREEN_H / 5);
 
-    Game_button_text.loadFromFile("/Users/msavytskyi/Downloads/snake/app/button_game.png", sf::IntRect(0, 0, w->SCREEN_W / 2, w->SCREEN_H - w->SCREEN_H / 1.25));
+    Game_button_text.loadFromFile("./resources/button_game.png", sf::IntRect(0, 0, w->SCREEN_W / 2, w->SCREEN_H - w->SCREEN_H / 1.25));
     Game_button.setTexture(Game_button_text);
     Game_button.setPosition(1, w->SCREEN_H - w->SCREEN_H / 1.05263158);
 
-    Leder_board_text.loadFromFile("/Users/msavytskyi/Downloads/snake/app/button_leader.png", sf::IntRect(0, 0, w->SCREEN_W / 2, w->SCREEN_H / 2));
+    Leder_board_text.loadFromFile("./resources/button_leader.png", sf::IntRect(0, 0, w->SCREEN_W / 2, w->SCREEN_H / 2));
     Leder_board.setTexture(Leder_board_text);
     Leder_board.setPosition(1, w->SCREEN_H - w->SCREEN_H / 1.4285);
 
-    font.loadFromFile("/Users/msavytskyi/Downloads/snake/app/Pacifico-Regular.ttf");
+    font.loadFromFile("./resources/Pacifico-Regular.ttf");
     Leader_board_tittle.setFont(font); // font is a sf::Font
     Leader_board_tittle.setString("Score");
     Leader_board_tittle.setCharacterSize(80);

@@ -37,6 +37,14 @@ add_compile_options(
         -Wno-unused-parameter
 )
 add_executable(race00 ${SOURCE_EXE})
-target_link_libraries(race00 sfml-graphics sfml-window sfml-system src)
+target_link_libraries(race00 sfml-graphics sfml-window sfml-system sfml-audio src)
 include_directories(race00 ${SFML_INCLUDE_DIR})
-# configure_file(resources/ArialBold.ttf ${CMAKE_CURRENT_BINARY_DIR}/ArialBold.ttf COPYONLY)
+
+configure_file(./resources/electro.wav ${CMAKE_CURRENT_BINARY_DIR}/resources/electro.wav COPYONLY)
+configure_file(./resources/menu.jpg ${CMAKE_CURRENT_BINARY_DIR}/resources/menu.jpg COPYONLY)
+configure_file(./resources/Back_button.png ${CMAKE_CURRENT_BINARY_DIR}/resources/Back_button.png COPYONLY)
+configure_file(./resources/button_game.png ${CMAKE_CURRENT_BINARY_DIR}/resources/button_game.png COPYONLY)
+configure_file(./resources/button_leader.png ${CMAKE_CURRENT_BINARY_DIR}/resources/button_leader.png COPYONLY)
+configure_file(./resources/Pacifico-Regular.ttf ${CMAKE_CURRENT_BINARY_DIR}/resources/Pacifico-Regular.ttf COPYONLY)
+configure_file(./resources/Pacifico-Regular.ttf ${CMAKE_CURRENT_BINARY_DIR}/resources/Pacifico-Regular.ttf COPYONLY)
+

@@ -6,6 +6,22 @@
 #include "src/Menu.h"
 #include "src/leaderboard.h"
 
+void initMusic()
+{
+    // sf::Music music;
+    // if (!music.openFromFile("electro.ogg"))
+    //     std::cout << -1; // error
+    // music.play();
+    // music.setLoop(true);
+
+    sf::SoundBuffer buffer;
+    buffer.loadFromFile("./resources/electro.wav"); // тут загружаем в буфер что то
+    sf::Sound sound;
+    sound.setBuffer(buffer);
+    sound.setVolume(100.f);
+    sound.play();
+}
+
 void initGame(WindowInfo *w)
 {
     w->FRAME_TIME = START_FRAME_TIME - (std::max(w->W, w->H) * std::max(w->W, w->H)) / 130;
@@ -150,7 +166,7 @@ bool initMenu(WindowInfo *w)
 int main(int argc, char *argv[])
 {
     WindowInfo *w = new WindowInfo;
-
+    initMusic();
     parce_func(argc, argv, w->W, w->H);
 
     w->SCREEN_W = w->W * BLOCK_SIZE;

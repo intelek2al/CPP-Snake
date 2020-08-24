@@ -11,6 +11,7 @@
 #include <string>
 
 #include "Graphics.hpp"
+#include "Audio.hpp"
 
 #include "leaderboard.h"
 

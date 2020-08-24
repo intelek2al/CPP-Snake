@@ -87,8 +87,7 @@ bool Snake::moveSnake()
     // std::cout << "!! " << front->getPosition().x << " " << front->getPosition().y << std::endl;
     auto &vector = move_vector.front();
     front->setColor(COLOR_BODY);
-    sf::Vector2<int>
-        new_head_position = {front->getPosition().x + SPEED * vector.x, front->getPosition().y + SPEED * vector.y};
+    sf::Vector2<int> new_head_position = {front->getPosition().x + SPEED * vector.x, front->getPosition().y + SPEED * vector.y};
     is_done_process = true;
     if (move_vector.size() > 1)
     {
